@@ -1,5 +1,8 @@
 name: ci-golang
-on: [push]
+on:
+  pull_requests:
+    branches:
+      - develop
 
 jobs:
   check-application: 
