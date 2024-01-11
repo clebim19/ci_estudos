@@ -1,8 +1,5 @@
 name: ci-golang
-on:
-  pull_request:
-    branches:
-      - develop
+on: "push"
 
 jobs:
   check-application: 
@@ -14,3 +11,16 @@ jobs:
           node-version: 18
       - run: npm run test
       - run: npm run start
+
+      - name: Set up QEMU (setup docker)
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: false
+          tags: clebim/fc2.0-ci-node:latest
